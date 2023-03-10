@@ -4,6 +4,7 @@ import 'package:float_hello/app/controller/method/user_provider.dart';
 import 'package:float_hello/main.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:webview_windows/webview_windows.dart';
 import 'package:window_manager/window_manager.dart';
 
 class HomeController extends GetxController with WindowListener {
@@ -17,6 +18,7 @@ class HomeController extends GetxController with WindowListener {
   final accessTokenCon = TextEditingController();
   final queryCon = TextEditingController();
   final receivingCon = TextEditingController();
+  final webViewCon = WebviewController();
 
   @override
   onInit() {
@@ -29,7 +31,7 @@ class HomeController extends GetxController with WindowListener {
     apiKeyCon.text = box.read('apiKeyCon') ?? '';
     secretKeyCon.text = box.read('secretKeyCon') ?? '';
     accessTokenCon.text = box.read('accessTokenCon') ?? '';
-
+    initWebState();
     super.onInit();
   }
 
@@ -49,16 +51,25 @@ class HomeController extends GetxController with WindowListener {
     super.dispose();
   }
 
-  @override
-  onWindowMaximize() {
-    isMaximize.value = true;
+  void initWebState() async {
+    // Optionally initialize the webview environment using
+    // a custom user data directory
+    // and/or a custom browser executable directory
+    // and/or custom chromium command line flags
+    //await WebviewController.initializeEnvironment(
+    //    additionalArguments: '--show-fps-counter');
+
+    try {
+      await webViewCon.initialize();
+      await webViewCon
+          .loadUrl('https://8560p5kej.wasee.com/s/8560p5kej?def_sid=0');
+      webViewCon.webMessage.listen((event) {});
+    } on Exception catch (e) {
+      print(e);
+    }
   }
 
-  @override
-  onWindowUnmaximize() {
-    isMaximize.value = false;
-  }
-
+  /// 获取Access_token
   void getAccessToken() async {
     final apiKey = apiKeyCon.text;
     final secretKey = secretKeyCon.text;
@@ -80,6 +91,7 @@ class HomeController extends GetxController with WindowListener {
     box.write('accessTokenCon', accessTokenCon.text);
   }
 
+  /// 发送查询
   void sendQuery() async {
     final accessToken = accessTokenCon.text;
     final query = queryCon.text;
@@ -105,6 +117,16 @@ class HomeController extends GetxController with WindowListener {
 
     receivingCon.text =
         response.body['result']?['responses']?[0]?['actions']?[0]?['say'] ?? '';
+  }
+
+  @override
+  onWindowMaximize() {
+    isMaximize.value = true;
+  }
+
+  @override
+  onWindowUnmaximize() {
+    isMaximize.value = false;
   }
 
   /// 切换最大化显示

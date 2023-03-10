@@ -12,6 +12,7 @@ dependencies:
   get: ^4.6.5
   get_storage: ^2.1.1
   package_info_plus: ^3.0.3
+  webview_windows: ^0.2.2
   window_manager: ^0.3.1
 
 dev_dependencies:
