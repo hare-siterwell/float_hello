@@ -1,5 +1,4 @@
 final Map<String, String> zhCN = {
-  'Hello World!': '你好，世界！',
   'Float Hello': 'Float Hello',
   'About': '关于',
   'Version': '版本',
@@ -8,4 +7,7 @@ final Map<String, String> zhCN = {
   'Switch to dark theme': '切换深色主题',
   'Switch to Chinese': '切换中文模式',
   'Switch to English': '切换英文模式',
+  'Send Message': '发送信息',
+  'Get Access_token': '获取 Access_token',
+  'Loading...': '加载中...',
 };

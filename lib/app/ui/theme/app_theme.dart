@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+const homeAppBarHeight = Size.fromHeight(40);
+
 final appThemeData = ThemeData(
   useMaterial3: true,
   brightness: Brightness.light,
@@ -10,6 +12,6 @@ final appThemeData = ThemeData(
 final appDarkThemeData = ThemeData(
   useMaterial3: true,
   brightness: Brightness.dark,
-  colorSchemeSeed: Colors.purple,
+  colorSchemeSeed: Colors.orange,
   fontFamily: 'Sarasa UI SC',
 );

@@ -30,7 +30,7 @@ class HomeAppBar extends GetView<HomeController> {
                     : 'Switch to Chinese'.tr),
               ),
             ),
-            PopupMenuDivider(),
+            const PopupMenuDivider(),
             PopupMenuItem(
               value: 'About',
               child: Text('About'.tr),
@@ -62,11 +62,11 @@ class HomeAppBar extends GetView<HomeController> {
           onPressed: controller.toggleMaximized,
           child: Obx(
             () => controller.isMaximize.isTrue
-                ? Icon(
+                ? const Icon(
                     Icons.filter_none_outlined,
                     size: 14,
                   )
-                : Icon(
+                : const Icon(
                     Icons.crop_square,
                     size: 20,
                   ),
