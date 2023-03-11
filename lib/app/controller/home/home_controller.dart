@@ -31,6 +31,7 @@ class HomeController extends GetxController with WindowListener {
     apiKeyCon.text = box.read('apiKeyCon') ?? '';
     secretKeyCon.text = box.read('secretKeyCon') ?? '';
     accessTokenCon.text = box.read('accessTokenCon') ?? '';
+
     initWebState();
     super.onInit();
   }
@@ -48,24 +49,39 @@ class HomeController extends GetxController with WindowListener {
     if (Platform.isWindows) {
       windowManager.removeListener(this);
     }
+    apiKeyCon.dispose();
+    secretKeyCon.dispose();
+    accessTokenCon.dispose();
+    queryCon.dispose();
+    receivingCon.dispose();
+    webViewCon.dispose();
     super.dispose();
   }
 
+  /// 初始化网页
   void initWebState() async {
-    // Optionally initialize the webview environment using
-    // a custom user data directory
-    // and/or a custom browser executable directory
-    // and/or custom chromium command line flags
-    //await WebviewController.initializeEnvironment(
-    //    additionalArguments: '--show-fps-counter');
-
     try {
+      const url = 'https://8560p5kej.wasee.com/s/8560p5kej?def_sid=0';
+      const script = 'document.getElementById("thinkPano").'
+          'getElementsByTagName("div")[0].style.touchAction="manipulation";';
+
       await webViewCon.initialize();
-      await webViewCon
-          .loadUrl('https://8560p5kej.wasee.com/s/8560p5kej?def_sid=0');
-      webViewCon.webMessage.listen((event) {});
-    } on Exception catch (e) {
-      print(e);
+
+      webViewCon.loadingState.listen(
+        (event) async {
+          if (event == LoadingState.navigationCompleted) {
+            await webViewCon.executeScript(script);
+          }
+        },
+      );
+
+      await webViewCon.setBackgroundColor(Colors.transparent);
+      await webViewCon.setPopupWindowPolicy(WebviewPopupWindowPolicy.deny);
+      await webViewCon.loadUrl(url);
+
+      update(['Webview']);
+    } catch (e) {
+      Get.defaultDialog(title: 'Error'.tr, middleText: e.toString());
     }
   }
 

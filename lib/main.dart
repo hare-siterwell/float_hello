@@ -32,6 +32,7 @@ Future<void> main() async {
       center: true,
     );
     windowManager.waitUntilReadyToShow(windowOptions, () async {
+      // await windowManager.setFullScreen(true);
       await windowManager.show();
       await windowManager.focus();
     });

@@ -9,7 +9,11 @@ class HomeCenter extends GetView<HomeController> {
   @override
   build(context) {
     return Center(
-      child: Webview(controller.webViewCon),
+      child: GetBuilder<HomeController>(
+        id: 'Webview',
+        builder: (_) => Webview(controller.webViewCon),
+      ),
+
       // Container(
       //   margin: const EdgeInsets.symmetric(horizontal: 200),
       //   child: Column(
